@@ -10,7 +10,7 @@ public class Laptop {
 	}
 	
 	public void comparePrice(Laptop laptop) {
-		if (this.price > laptop.price) {
+		if (this.price > laptop.price) { // this refers to the current object
 			System.out.println(this.brand + " is more costly");
 		} else {
 			System.out.println(laptop.brand + " is more costly");
