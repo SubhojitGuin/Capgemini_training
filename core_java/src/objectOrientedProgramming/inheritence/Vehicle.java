@@ -25,12 +25,15 @@ public class Vehicle {
 
 class Bike extends Vehicle {
 	
-	Bike(String brand, String color, double price) {
+	public Bike() {
+		
+	}
+	
+	public Bike(String brand, String color, double price) {
 		super();
 		this.brand = brand; // inherited
 		this.color = color; // inherited
 		this.price = price; // inherited
 	}
-	
 	
 }
