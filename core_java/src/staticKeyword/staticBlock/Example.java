@@ -2,7 +2,7 @@ package staticKeyword.staticBlock;
 
 public class Example {
 	
-	static {
+	static { // The static blocks are called before the main() method before class loading
 		System.out.println("SB1");
 	}
 	
