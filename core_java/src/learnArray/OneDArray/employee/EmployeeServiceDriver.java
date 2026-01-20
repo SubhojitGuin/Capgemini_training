@@ -70,7 +70,7 @@ public class EmployeeServiceDriver {
 		sc.nextLine();
 		System.out.print("Enter the department name: ");
 		String department = sc.nextLine();
-		Employee topPaidEmployeeByDepartment = employeeService.getTopPaidEmployeeByDepartment(experiencedEmployees, department);
+		Employee topPaidEmployeeByDepartment = employeeService.getTopPaidEmployeeByDepartment(employees, department);
 		System.out.println("The top paid employee of " + department + " department is: ");
 		topPaidEmployeeByDepartment.print();
 		
