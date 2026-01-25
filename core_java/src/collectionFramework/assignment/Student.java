@@ -38,6 +38,9 @@ public class Student {
 		printAll(foundStudents);
 		
 		System.out.println("\nThe number of passed students is " + passedStudents.size());
+		System.out.println("The number of failed students is " + (studentList.size() - passedStudents.size())
+				
+				);
 	}
 
 	private static List<Student> findStudentsByName(List<Student> studentList, String name) {
