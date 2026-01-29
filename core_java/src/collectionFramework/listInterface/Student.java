@@ -1,4 +1,4 @@
-package collectionFramework;
+package collectionFramework.listInterface;
 
 public class Student {
 	
