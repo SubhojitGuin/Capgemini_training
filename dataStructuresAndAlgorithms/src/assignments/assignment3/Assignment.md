@@ -1,0 +1,8 @@
+# Day 3 Assignment
+
+|                      | Bubble Sort                              | Selection Sort                            | Insertion Sort                           | Merge Sort                                               | Quick Sort                                          |
+|----------------------|------------------------------------------|-------------------------------------------|------------------------------------------|----------------------------------------------------------|-----------------------------------------------------|
+| **Time complexity**  | Best: O(n)<br>Avg: O(n²)<br>Worst: O(n²) | Best: O(n²)<br>Avg: O(n²)<br>Worst: O(n²) | Best: O(n)<br>Avg: O(n²)<br>Worst: O(n²) | Best: O(n log n)<br>Avg: O(n log n)<br>Worst: O(n log n) | Best: O(n log n)<br>Avg: O(n log n)<br>Worst: O(n²) |
+| **Space complexity** | O(1)                                     | O(1)                                      | O(1)                                     | O(n)                                                     | O(log n)                                            |
+| **Stability**        | Stable                                   | Not stable                                | Stable                                   | Stable                                                   | Not stable                                          |
+| **In-place sorting** | Yes                                      | Yes                                       | Yes                                      | No                                                       | Yes                                                 |
