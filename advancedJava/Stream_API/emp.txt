@@ -1,0 +1,2 @@
+EmployeeDetails{id=1, name='Sam', salary=24200.000000000004, deptNo=10, emailId='sam@gmail.com', gender='male'}
+EmployeeDetails{id=3, name='Alice', salary=66550.00000000001, deptNo=10, emailId='alice@gmail.com', gender='female'}
