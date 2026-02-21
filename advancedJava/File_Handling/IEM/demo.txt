@@ -1,0 +1,10 @@
+47Hi
+F
+true
+99.9
+CustomClass{value=5, name='Subho'}
+47Hi
+F
+true
+99.9
+CustomClass{value=5, name='Subho'}
