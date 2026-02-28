@@ -5,17 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-/* Write a JDBC program to get the details of the student by using name or email id or gender or stream or degree */
-public class StudentJDBC {
+/* Write a JDBC program to display the details of the students if the salary is greater than 80 */
+public class SearchStudentUsingSalaryJDBC {
 	
 	public static void main(String[] args) {
 		String DB_URL = "jdbc:mysql://localhost:3306/student_management_system";
 		String DB_USER = "root";
 		String DB_PASSWORD = "root";
 		
-		String SELECT_QUERY = "SELECT * FROM student_details WHERE Student_Name = ? OR Student_EmailId = ? OR Student_Gender = ? OR Student_Degree = ?";
+		String SELECT_QUERY = "SELECT * FROM student_details WHERE Student_Percentage > ?";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -24,24 +23,20 @@ public class StudentJDBC {
 			e.printStackTrace();
 		}
 		
-		try (Scanner sc = new Scanner(System.in)) {
-			
-			System.out.print("Enter the value: ");
-			String value = sc.nextLine();
-			
+		try {
 			Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 			System.out.println("Connection created successfully");
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_QUERY);	
-			ps.setString(1, value);
-			ps.setString(2, value);
-			ps.setString(3, value);
-			ps.setString(4, value);
-						
+			ps.setInt(1, 80);
+			
 			ResultSet resultSet = ps.executeQuery();
 			
-			if (resultSet.isBeforeFirst()) {
-				while (resultSet.next()) {
+			/* check whether the value exists in the Result Set (Buffer Memory) without moving the cursor
+			 * This checks whether the cursor is before the first row of the data in ResultSet or not.
+			 */
+			if (resultSet.isBeforeFirst()) { 
+				while (resultSet.next()) {				
 					System.out.println("\n------------------------------------\n");
 					System.out.println("Student ID:\t\t" + resultSet.getInt("Student_ID"));
 					System.out.println("Student Name:\t\t" + resultSet.getString("Student_Name"));
@@ -54,12 +49,13 @@ public class StudentJDBC {
 					System.out.println("Student Mobile Number: " + resultSet.getLong("Student_Mobile_Number")); 
 				}
 			} else {
-				System.out.println("No student found");
-			}
+				System.out.println("No data found!");
+			} 
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }
