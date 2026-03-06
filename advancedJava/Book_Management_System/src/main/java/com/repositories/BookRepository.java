@@ -7,15 +7,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.entities.BookEntity;
 
 public class BookRepository {
-	
-	private static final String SELECT_ALL_BOOKS = "SELECT book FROM BookEntity book";
-	private static final String UPDATE_BOOK_PRICE_BY_ID_AND_AUTHOR = "UPDATE BookEntity book SET book.price = :price WHERE book.id = :id AND book.author = :author";
-	private static final String DELETE_BOOK_BY_ID = "DELETE FROM BookEntity book WHERE book.id = :id";
-	private static final String SELECT_BOOK_BY_TITLE = "SELECT book FROM BookEntity book WHERE book.title = :title";
 	
 	private EntityManagerFactory entityManagerFactory;
 	
@@ -52,7 +48,7 @@ public class BookRepository {
 	
 	public List<BookEntity> getAllBooks() {	
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Query query = entityManager.createQuery(SELECT_ALL_BOOKS);
+		TypedQuery<BookEntity> query = entityManager.createNamedQuery(BookEntity.SELECT_ALL_BOOKS, BookEntity.class);
 		List<BookEntity> books = query.getResultList();
 		entityManager.close();
 		return books;
@@ -62,7 +58,7 @@ public class BookRepository {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		
-		Query query = entityManager.createQuery(UPDATE_BOOK_PRICE_BY_ID_AND_AUTHOR);
+		Query query = entityManager.createNamedQuery(BookEntity.UPDATE_PRICE_BY_ID_AND_AUTHOR);
 		query.setParameter("id", bookId);
 		query.setParameter("author", bookAuthor);
 		query.setParameter("price", bookPrice);
@@ -87,7 +83,7 @@ public class BookRepository {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		
-		Query query = entityManager.createQuery(DELETE_BOOK_BY_ID);
+		Query query = entityManager.createNamedQuery(BookEntity.DELETE_BOOK_BY_ID);
 		query.setParameter("id", bookId);
 		
 		int rowsUpdated;
@@ -108,7 +104,7 @@ public class BookRepository {
 	
 	public BookEntity getBookByTitle(String bookTitle) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Query query = entityManager.createQuery(SELECT_BOOK_BY_TITLE);
+		TypedQuery<BookEntity> query = entityManager.createNamedQuery(BookEntity.SELECT_BOOK_BY_TITLE, BookEntity.class);
 		query.setParameter("title", bookTitle);
 		
 		BookEntity book;
