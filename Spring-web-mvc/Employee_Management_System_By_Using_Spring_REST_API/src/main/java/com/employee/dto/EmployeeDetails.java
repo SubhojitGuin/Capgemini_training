@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmployeeDetails {
 
-	private int id;
 	private String employeeName;
-	private double employeeSalary;
-	private int employeeDeptNo;
-	private long mobileNumber;
+	private Double employeeSalary;
+	private Integer employeeDeptNo;
+	private Long mobileNumber;
 	private String email;
 	private String gender;
+	private String password;
 
 }

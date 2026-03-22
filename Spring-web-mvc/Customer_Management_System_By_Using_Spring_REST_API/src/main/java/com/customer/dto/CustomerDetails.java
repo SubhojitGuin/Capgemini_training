@@ -7,7 +7,8 @@ public class CustomerDetails {
 	
 	private int id;
 	private long mobileNumber;
-	private long emailId;
+	private String email;
 	private String password;
+	private String name;
 
 }

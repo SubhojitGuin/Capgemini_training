@@ -1,17 +1,24 @@
 package com.employee.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+//import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeDetails;
+import com.employee.dto.EmployeeInfo;
+import com.employee.service.EmployeeService;
 
-import jakarta.websocket.server.PathParam;
+import lombok.RequiredArgsConstructor;
 
 /*
  * It is a class level annotation
@@ -28,7 +35,10 @@ import jakarta.websocket.server.PathParam;
  * -> It is also used to convert Java Object into JSON(JavaScript Object Notation) Object
  */
 @RestController
+@RequiredArgsConstructor
 public class EmployeeController {
+	
+	private final EmployeeService employeeService;
 
 	/*
 	 * @PostMapping is used to create an API or end-point to handle the POST request
@@ -38,8 +48,8 @@ public class EmployeeController {
 	 * a request. It is applied to method parameters.
 	 */
 	@PostMapping("/registration")
-	public String employeeRegistration(@RequestBody EmployeeDetails employeeDetails) {
-		return employeeDetails.getEmail();
+	public ResponseEntity<EmployeeInfo> employeeRegistration(@RequestBody EmployeeDetails employeeDetails) {
+		return new ResponseEntity<>(employeeService.employeeRegistration(employeeDetails), HttpStatus.CREATED);
 	}
 
 	/*
@@ -50,7 +60,7 @@ public class EmployeeController {
 	 */
 	/*
 	 * The data that is sent to a method handling an HTTP GET request can be passed
-	 * through the URL in two ways: 1) Query String 2) URL Path (PathParam).
+	 * through the URL in two ways: 1) Query String 2) URL Path (PathVariable).
 	 * 
 	 * If the data is sent through a Query String, it is added after the API or
 	 * end-point using a question mark (?). The data is stored in key-value pairs.
@@ -68,18 +78,20 @@ public class EmployeeController {
 	 * @RequestParam is applied to method parameters.
 	 */
 	@GetMapping("/emplogin")
-	public void employeeLoginByUsingEmailAndPassword(@RequestParam("emailId") String emailId,
-			@RequestParam("password") String password) {
-
+	public ResponseEntity<String> employeeLoginByUsingEmailAndPassword(@RequestParam("emailId") String emailId,
+													 @RequestParam("password") String password) {
+		return new ResponseEntity<>(employeeService.employeeLogin(emailId, password), HttpStatus.FOUND);
 	}
 
 	/*
 	 * @PutMapping is used to create an API or end-point to handle the Put request
 	 * or Update request
 	 */
-	@PutMapping("/updatesalary")
-	public void updateEmployeeSalaryByUsingMobileNumber() {
-
+	@PutMapping("/updatesalary/{salary}/{mobile}")
+	public ResponseEntity<String> updateEmployeeSalaryByUsingMobileNumber(@PathVariable double salary,
+														@PathVariable long mobile) {
+		employeeService.udpateSalaryByMobileNumber(salary, mobile);
+		return new ResponseEntity<>("Salary updated", HttpStatus.ACCEPTED);
 	}
 
 	/*
@@ -101,10 +113,11 @@ public class EmployeeController {
 	 * 
 	 * @PathParam is applied to method parameters.
 	 */
-	@ResponseBody
+//	@ResponseBody
 	@DeleteMapping("/deleteemployee/{emailId}")
-	public String deleteEmployeeDetailsByUsingEmail(@PathParam("emailId") String emailId) {
-		return emailId;
+	public ResponseEntity<Void> deleteEmployeeDetailsByUsingEmail(@PathVariable("emailId") String emailId) {
+		employeeService.deleteEmployeeByEmail(emailId);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping("/deleteemployeebymobilenumberandpassword")
@@ -112,10 +125,15 @@ public class EmployeeController {
 		
 	}
 
-	@ResponseBody
+//	@ResponseBody
 	@GetMapping("/getallemployees")
-	public String getAllEmployeeDetails() {
-		return "All Employee Details";
+	public ResponseEntity<List<EmployeeDetails>> getAllEmployeeDetails() {
+		return new ResponseEntity<>(employeeService.getAllEmployeeDetails(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/employee/{id}")
+	public ResponseEntity<EmployeeDetails> getEmployeeById(@PathVariable int id) {
+		return new ResponseEntity<>(employeeService.getEmployeeById(id), HttpStatus.FOUND);
 	}
 
 }
