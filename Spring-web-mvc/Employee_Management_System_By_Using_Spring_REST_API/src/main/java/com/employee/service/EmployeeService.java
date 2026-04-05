@@ -15,6 +15,7 @@ import com.employee.exception.NotFoundException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /*
  * @Service is the combination of @Component annotation
@@ -22,11 +23,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeService {
 	
 	private final EmployeeDAO employeeDAO;
 	
 	public EmployeeInfo employeeRegistration(EmployeeDetails employeeDetails) {
+		log.info("Employee registration started");
 		
 		if (employeeDAO.countAllEmployeeByEmailOrMobileNumber(employeeDetails.getEmail(), employeeDetails.getMobileNumber()) > 0) {
 			throw new DuplicateUserException("Duplicate User exist");
@@ -47,6 +50,7 @@ public class EmployeeService {
 	}
 	
 	public String employeeLogin(String email, String password) {
+		log.info("Employee login started");
 		EmployeeDetailsEntity employeeDetailsEntity = employeeDAO.getEmployeeDetialsByUsingEmailidAndPassword(email, password);
 		
 		if (employeeDetailsEntity == null) {
@@ -57,6 +61,7 @@ public class EmployeeService {
 	}
 
 	public List<EmployeeDetails> getAllEmployeeDetails() {
+		log.info("Get employee details started");
 		return employeeDAO.findAllEmployees().stream()
 				.map(emp -> new EmployeeDetails(
 						emp.getEmployeeName(),
@@ -71,6 +76,7 @@ public class EmployeeService {
 	
 	@Transactional
 	public void deleteEmployeeByEmail(String email) {
+		log.info("Delete employee started");
 		Long count = employeeDAO.removeByEmail(email);
 		
 		if (count == 0) {
@@ -80,6 +86,7 @@ public class EmployeeService {
 
 	@Transactional
 	public void udpateSalaryByMobileNumber(Double salary, Long mobileNumber) {
+		log.info("Update Employee started");
 		Long count = employeeDAO.updateSalaryByMobileNumber(salary, mobileNumber);
 		
 		if (count == 0) {
@@ -88,6 +95,7 @@ public class EmployeeService {
 	}
 
 	public EmployeeDetails getEmployeeById(int id) {
+		log.info("Get Employee by id started");
 		 Optional<EmployeeDetailsEntity> emp = employeeDAO.findById(id);
 		 
 		 if (emp.isEmpty()) {

@@ -10,7 +10,11 @@ public class SingletonLazyExample {
 	
 	public static SingletonLazyExample getObject() {
 		if (obj == null) {
-			obj = new SingletonLazyExample();
+			synchronized (SingletonLazyExample.class) {
+				if (obj == null) {
+					obj = new SingletonLazyExample();
+				}
+			}
 		}
 		
 		return obj;
